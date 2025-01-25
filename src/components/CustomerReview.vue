@@ -6,7 +6,7 @@
           <img src="../assets/google.svg" alt="Google" />
         </div>
         <div class="reviews-summary__text">
-          <p>Відгуки наших клієнтів у Google</p>
+          <p>{{ langs.title }}</p>
         </div>
       </div>
 
@@ -20,13 +20,15 @@
             :id="index.toString()"
           ></IconStar>
         </div>
-        <span class="reviews-summary__count">{{ reviews }} відгуки</span>
+        <span class="reviews-summary__count">{{ reviews }} {{ langs.description }}</span>
       </div>
     </div>
 
     <div class="reviews-summary__actions">
-      <DevButton @click="redirectToGoogle" :variant="'secondary'">Переглянути</DevButton>
-      <DevButton @click="openModal" :variant="'primary'">Написати</DevButton>
+      <DevButton @click="redirectToGoogle" :variant="'secondary'">
+        {{ langs.buttonSecondary }}</DevButton
+      >
+      <DevButton @click="openModal" :variant="'primary'">{{ langs.buttonPrimary }}</DevButton>
     </div>
   </div>
   <Transition name="modal">
@@ -41,11 +43,13 @@
 import { computed, defineProps, ref } from 'vue'
 import DevButton from './/DevButton.vue'
 import IconStar from './IconStar.vue'
+import { type ILang } from '@/models/models'
 const isModalShown = ref(false)
 
 const props = defineProps<{
   rating: number
   reviews: number
+  langs: ILang
 }>()
 
 const stars = computed(() => {
