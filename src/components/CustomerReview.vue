@@ -13,62 +13,64 @@
       <div class="reviews-summary__rating">
         <span class="reviews-summary__rating-value">{{ rating }}</span>
         <div class="reviews-summary__stars">
-          <DevSVG
-            v-for="(fill, index) in fillStar"
+          <IconStar
+            v-for="(fill, index) in stars"
             :key="index"
             :fill="fill"
             :id="index.toString()"
-          ></DevSVG>
+          ></IconStar>
         </div>
         <span class="reviews-summary__count">{{ reviews }} відгуки</span>
       </div>
     </div>
 
     <div class="reviews-summary__actions">
-      <DevButton @click="redirectToGoogle" :style="'check'">Переглянути</DevButton>
-      <DevButton @click="openModal" :style="'write'">Написати</DevButton>
+      <DevButton @click="redirectToGoogle" :variant="'secondary'">Переглянути</DevButton>
+      <DevButton @click="openModal" :variant="'primary'">Написати</DevButton>
     </div>
   </div>
   <Transition name="modal">
-    <div v-if="isModal" class="modal">Hello World</div>
+    <div v-if="isModalShown" class="modal">Hello World</div>
   </Transition>
   <Transition name="modal">
-    <div v-if="isModal" class="modal-overlay" @click="closeModal"></div>
+    <div v-if="isModalShown" class="modal-overlay" @click="closeModal"></div>
   </Transition>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
+import { computed, defineProps, ref } from 'vue'
 import DevButton from './/DevButton.vue'
-import DevSVG from './DevSVG.vue'
-const fillStar = ref<number[]>([0, 0, 0, 0, 0])
-const isModal = ref(false)
-interface Props {
+import IconStar from './IconStar.vue'
+const isModalShown = ref(false)
+
+const props = defineProps<{
   rating: number
   reviews: number
-}
-const { rating, reviews } = defineProps<Props>()
+}>()
 
-const getStarFill = () => {
-  const float = Number(Number(rating % 1).toFixed(1))
-  const intNumberRating = rating - Number(float)
+const stars = computed(() => {
+  const fillStar = ref<number[]>([0, 0, 0, 0, 0])
+
+  const float = Number(Number(props.rating % 1).toFixed(1))
+  const intNumberRating = props.rating - Number(float)
   for (let i = 0; i < intNumberRating; i++) {
     fillStar.value[i] = 100
   }
   if (float !== 0) {
     fillStar.value[intNumberRating] = float * 100
   }
-}
+  return fillStar.value
+})
+
 const redirectToGoogle = () => {
   window.location.href = 'https://www.google.com'
 }
 const openModal = () => {
-  isModal.value = true
+  isModalShown.value = true
 }
 const closeModal = () => {
-  isModal.value = false
+  isModalShown.value = false
 }
-getStarFill()
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import CustomerReview from '@/components/CustomerReview.vue'
-import type { IComment } from '@/module/module'
+import type { IComment } from '@/models/models'
 const data = ref<IComment[]>([])
 
 async function getRating() {
