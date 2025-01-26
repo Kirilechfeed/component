@@ -1,5 +1,9 @@
 # .
 
+В проекте используется следующий API:
+
+- [MockAPI](https://mockapi.io/) — сервис для создания и тестирования моковых API.
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
