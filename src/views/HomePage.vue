@@ -19,12 +19,7 @@ const langs = {
 }
 
 //решил реализловать Интернационализацию просто через обьект, но можно было и через библиотеку i18n
-const choicedLang = ref({
-  title: 'Відгуки наших клієнтів у Google',
-  description: 'вiдкуги',
-  buttonPrimary: 'Написати',
-  buttonSecondary: 'Переглянути',
-})
+const choicedLang = ref({ ...langs.ua })
 async function getRating() {
   const response = await fetch('https://679378dc5eae7e5c4d8ec5d6.mockapi.io/api/project/comments')
   data.value = await response.json()

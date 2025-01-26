@@ -13,12 +13,7 @@
       <div class="reviews-summary__rating">
         <span class="reviews-summary__rating-value">{{ rating }}</span>
         <div class="reviews-summary__stars">
-          <IconStar
-            v-for="(fill, index) in stars"
-            :key="index"
-            :fill="fill"
-            :id="index.toString()"
-          ></IconStar>
+          <IconStar v-for="(fill, index) in stars" :key="index" :fill="fill" :id="index"></IconStar>
         </div>
         <span class="reviews-summary__count">{{ reviews }} {{ langs.description }}</span>
       </div>
@@ -31,6 +26,8 @@
       <DevButton @click="openModal" :variant="'primary'">{{ langs.buttonPrimary }}</DevButton>
     </div>
   </div>
+
+  <!-- Модальное окто тоже можно было вынести в отдельный компонент но не стал так как его функционал очень маленький -->
   <Transition name="modal">
     <div v-if="isModalShown" class="modal">Hello World</div>
   </Transition>
@@ -53,17 +50,17 @@ const props = defineProps<{
 }>()
 
 const stars = computed(() => {
-  const fillStar = ref<number[]>([0, 0, 0, 0, 0])
+  const fillStar = [0, 0, 0, 0, 0]
 
   const float = Number(Number(props.rating % 1).toFixed(1))
   const intNumberRating = props.rating - Number(float)
   for (let i = 0; i < intNumberRating; i++) {
-    fillStar.value[i] = 100
+    fillStar[i] = 100
   }
   if (float !== 0) {
-    fillStar.value[intNumberRating] = float * 100
+    fillStar[intNumberRating] = float * 100
   }
-  return fillStar.value
+  return fillStar
 })
 
 const redirectToGoogle = () => {

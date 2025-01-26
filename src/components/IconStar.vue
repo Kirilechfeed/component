@@ -18,6 +18,6 @@
 <script lang="ts" setup>
 defineProps<{
   fill: number
-  id: string
+  id: number
 }>()
 </script>
